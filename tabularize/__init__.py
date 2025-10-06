@@ -15,11 +15,10 @@ def headers(
             if current_header in force:
                 header_found = True
 
-        if len(data) > i + 1 and data[i] == 32 and data[i + 1] == 32 and current_header:
-            header_found = True
-            continue
-
-        if header_found and data[i] != 32:
+        if data[i] == 32:
+            if len(data) > i + 1 and data[i + 1] == 32 and current_header:
+                header_found = True
+        elif header_found:
             headers.append((bytes(current_header), header_start, i))
             header_start = i
             header_found = False
