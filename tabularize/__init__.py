@@ -28,28 +28,18 @@ def body(headers: tuple[tuple[bytes, int, int | None], ...], line: bytearray) ->
         if end_index is None:
             value = line[start_offset:].strip()
             if value:
-                entry[header_name] = value
+                entry[header_name] = bytes(value)
 
             return entry
 
         if end_index <= start_offset:
             continue
 
-        # What if our data ends early and another one starts?
-        break_point: int = line.find(b"\x20\x20", max(start_index, start_offset), end_index)
-        if break_point != -1:
-            value = line[max(start_index, start_offset):break_point].strip()
-            if value:
-                entry[header_name] = value
-
-            start_offset = break_point
-            continue
-
         # What if we break at our end index?
         if end_index > 0 and line[end_index - 1] == 32:
             value = line[start_offset:end_index].strip()
             if value:
-                entry[header_name] = value
+                entry[header_name] = bytes(value)
 
             start_offset = end_index
             continue
@@ -60,13 +50,13 @@ def body(headers: tuple[tuple[bytes, int, int | None], ...], line: bytearray) ->
             # It seems we're capturing everything?
             value = line[max(start_index, start_offset):].strip()
             if value:
-                entry[header_name] = value
+                entry[header_name] = bytes(value)
 
             return entry
         else:
             value = line[max(start_index, start_offset):break_point].strip()
             if value:
-                entry[header_name] = value
+                entry[header_name] = bytes(value)
 
             start_offset = break_point
 
