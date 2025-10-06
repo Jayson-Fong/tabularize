@@ -1,16 +1,19 @@
-BytesType = bytearray | bytes
-Header: type = tuple[bytes, int, int | None]
+from typing import TypeAlias, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    BytesType: TypeAlias = bytearray | bytes
+    Header: TypeAlias = tuple[bytes, int, int | None]
 
 
 def headers(
-    data: BytesType, force: tuple[BytesType, ...] | None = None
-) -> tuple[Header, ...]:
-    headers: list[Header] = []
+    data: "BytesType", force: tuple["BytesType", ...] | None = None
+) -> tuple["Header", ...]:
+    headers: list["Header"] = []
 
     header_start: int = 0
     header_found: bool = False
     for i, char in enumerate(data):
-        current_header: BytesType = data[header_start:i].strip()
+        current_header: "BytesType" = data[header_start:i].strip()
         if force is not None and current_header in force:
             header_found = True
 
@@ -23,15 +26,15 @@ def headers(
             header_found = False
 
     # Capture our final header if there is one.
-    ending_header: BytesType = data[header_start:].strip()
+    ending_header: "BytesType" = data[header_start:].strip()
     if ending_header:
         headers.append((bytes(ending_header), header_start, None))
 
     return tuple(headers)
 
 
-def body(headers: tuple[Header, ...], line: BytesType) -> dict[bytes, BytesType]:
-    entry: dict[bytes, BytesType] = {}
+def body(headers: tuple["Header", ...], line: "BytesType") -> dict[bytes, "BytesType"]:
+    entry: dict[bytes, "BytesType"] = {}
 
     start_offset: int | None = 0
     for header_name, start_index, end_index in headers:
@@ -50,10 +53,13 @@ def body(headers: tuple[Header, ...], line: BytesType) -> dict[bytes, BytesType]
             end_index: int = line.find(b"\x20", header_start_offset)
             end_index: int | None = None if end_index == -1 else end_index
 
-        value: BytesType = line[header_start_offset:end_index].strip()
+        value: "BytesType" = line[header_start_offset:end_index].strip()
         if value:
             entry[header_name] = value
 
         start_offset = end_index
 
     return entry
+
+
+__all__: tuple[str, ...] = ("headers", "body")
