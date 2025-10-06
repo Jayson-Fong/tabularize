@@ -15,7 +15,7 @@ def headers(
             if current_header in force:
                 header_found = True
 
-        if data[i : i + 2] == b"\x20\x20" and current_header:
+        if len(data) > i + 1 and data[i] == 32 and data[i + 1] == 32 and current_header:
             header_found = True
             continue
 
@@ -24,8 +24,10 @@ def headers(
             header_start = i
             header_found = False
 
-    if data[header_start:].strip():
-        headers.append((bytes(data[header_start:].strip()), header_start, None))
+    # Capture our final header if there is one.
+    ending_header: BytesType = data[header_start:].strip()
+    if ending_header:
+        headers.append((bytes(ending_header), header_start, None))
 
     return tuple(headers)
 
@@ -33,7 +35,7 @@ def headers(
 def body(headers: tuple[Header, ...], line: BytesType) -> dict[bytes, BytesType]:
     entry: dict[bytes, BytesType] = {}
 
-    start_offset: int = 0
+    start_offset: int | None = 0
     for header_name, start_index, end_index in headers:
         if start_offset is None:
             break
@@ -50,7 +52,7 @@ def body(headers: tuple[Header, ...], line: BytesType) -> dict[bytes, BytesType]
             end_index: int = line.find(b"\x20", header_start_offset)
             end_index: int | None = None if end_index == -1 else end_index
 
-        value = line[header_start_offset:end_index].strip()
+        value: BytesType = line[header_start_offset:end_index].strip()
         if value:
             entry[header_name] = value
 
