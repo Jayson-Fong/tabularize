@@ -1,9 +1,16 @@
-def headers(data: bytearray) -> tuple[tuple[bytes, int, int | None], ...]:
+def headers(data: bytearray, force: tuple[bytes, ...] | None = None) -> tuple[tuple[bytes, int, int | None], ...]:
     headers: list[tuple[bytes, int, int | None]] = []
 
     header_start: int = 0
     header_found: bool = False
     for i, char in enumerate(data):
+        if force is not None:
+            current_header: bytearray = data[header_start:i].strip()
+            if current_header in force:
+                headers.append((bytes(current_header), header_start, i))
+                header_start = i
+                header_found = False
+
         if data[i:i + 2] == b"\x20\x20" and data[header_start:i].strip():
             header_found = True
             continue
