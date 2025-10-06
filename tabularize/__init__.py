@@ -11,9 +11,8 @@ def headers(
     header_found: bool = False
     for i, char in enumerate(data):
         current_header: BytesType = data[header_start:i].strip()
-        if force is not None:
-            if current_header in force:
-                header_found = True
+        if force is not None and current_header in force:
+            header_found = True
 
         if data[i] == 32:
             if len(data) > i + 1 and data[i + 1] == 32 and current_header:
