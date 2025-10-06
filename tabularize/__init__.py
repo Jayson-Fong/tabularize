@@ -48,17 +48,13 @@ def body(headers: tuple[Header, ...], line: BytesType) -> dict:
         if end_index is None or (
             end_index > start_offset and line[end_index - 1] == 32
         ):
-            value = line[header_start_offset:end_index].strip()
-            if value:
-                entry[header_name] = value
+            pass
+        else:
+            # Rather than strictly go off of our header indices, assume that continuous
+            # data represents a singular column as it appears we might be overflowing.
+            end_index: int = line.find(b"\x20", header_start_offset)
+            end_index: int | None = None if end_index == -1 else end_index
 
-            start_offset = end_index
-            continue
-
-        # Rather than strictly go off of our header indices, assume that continuous
-        # data represents a singular column as it appears we might be overflowing.
-        end_index: int = line.find(b"\x20", header_start_offset)
-        end_index: int | None = None if end_index == -1 else end_index
         value = line[header_start_offset:end_index].strip()
         if value:
             entry[header_name] = value
