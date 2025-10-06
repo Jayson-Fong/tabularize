@@ -30,26 +30,21 @@ def headers(
     return tuple(headers)
 
 
-def body(headers: tuple[Header, ...], line: BytesType) -> dict:
-    entry: dict = {}
+def body(headers: tuple[Header, ...], line: BytesType) -> dict[bytes, BytesType]:
+    entry: dict[bytes, BytesType] = {}
 
     start_offset: int = 0
     for header_name, start_index, end_index in headers:
         if start_offset is None:
             break
 
-        # What if our end index indicates we should capture everything?
-        # What if we break at our end index?
-
         # If `end_index` is None, it indicates that we should capture everything remaining.
         # The end of our header being our space character indicates our simplest case
         # where we may potentially have fixed-width columns.
         header_start_offset: int = max(start_offset, start_index)
-        if end_index is None or (
-            end_index > start_offset and line[end_index - 1] == 32
+        if end_index is not None and (
+            end_index <= start_offset or line[end_index - 1] != 32
         ):
-            pass
-        else:
             # Rather than strictly go off of our header indices, assume that continuous
             # data represents a singular column as it appears we might be overflowing.
             end_index: int = line.find(b"\x20", header_start_offset)
