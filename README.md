@@ -1,6 +1,14 @@
 <!--suppress HtmlDeprecatedAttribute-->
 <div align="center">
    <h1>🗂️ Tabularize</h1>
+
+[![Build Status](https://github.com/Jayson-Fong/tabularize/actions/workflows/python-package.yml/badge.svg?branch=main)](https://github.com/Jayson-Fong/tabularize/actions/workflows/python-package.yml)
+[![Coverage](https://img.shields.io/badge/coverage-100%25-green)](https://github.com/Jayson-Fong/tabularize/actions/workflows/python-package.yml)
+[![Latest Version](https://img.shields.io/pypi/v/tabularize.svg)](https://pypi.org/project/tabularize/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/tabularize.svg)](https://pypi.org/project/tabularize/)
+[![Format](https://img.shields.io/pypi/format/tabularize.svg)](https://pypi.org/project/tabularize/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Jayson-Fong/tabularize/blob/main/README.md)
+
 </div>
 
 <hr />
@@ -29,7 +37,7 @@ to its non-standardized, human-readable status reports that tend to give machine
 
 Tabularize is _probably not the solution for you_ - that is, modern protocols are often machine-readable, or they offer 
 a means to make it easily machine-readable. It shines when you need to parse semi-structured, tabular data where the
-schema is unknown (a situation you should avoid) or when you need tabular data parsed quickly.
+schema is unknown (a situation you should avoid) or when you need tabular data parsed with a quick turnaround.
 
 # Usage
 
