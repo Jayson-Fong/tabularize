@@ -29,9 +29,6 @@ to its non-standardized, human-readable status reports that tend to give machine
 
 # Samples
 
-<details style="border: 1px solid; border-radius: 8px; padding: 8px; margin-top: 4px;">
-<summary>📇 Name/Finger Protocol</summary>
-
 Tabularize is particularly useful for parsing the Name/Finger Protocol given that the `fingerd` server implementation is 
 unknown due to its lack of standardization. However, if the server implementation is known, consider using a 
 regular expression-based solution instead such as [TextFSM](https://pypi.org/project/textfsm/) as the data types can
@@ -70,34 +67,5 @@ chase                pts/2      3d  Oct 06 05:43 (:pts/0:S.1)
   {"Line": "1 vty 0", "Host(s)": "idle", "Idle": "00:00:00"}
 ]
 ```
-
-</details>
-
-</details>
-
-<details style="border: 1px solid; border-radius: 8px; padding: 8px; margin-top: 4px;">
-<summary>🖥️ Terminal Commands</summary>
-
-<details style="border: 1px solid; border-radius: 8px; padding: 8px; margin-top: 4px;">
-<summary>📋 w</summary>
-
-The `w` command would typically include uptime information, which Tabularize does not know how to interpret. As a 
-result, this example excludes it. While this is included as an example, it may be better implemented through other 
-means such as [TextFSM](https://pypi.org/project/textfsm/) or using regular expressions since it is consistent.
-
-```terminaloutput
-USER TTY      FROM    LOGIN@  IDLE WHAT
-dave console  -      Sun20   23:26 -
-eric s005     -      14:20       - w
-```
-
-```json
-[
-  {"USER": "dave", "TTY": "console", "FROM": "-", "LOGIN@": "Sun20", "IDLE": "23:26", "WHAT": "-"},
-  {"USER": "eric", "TTY": "s005", "FROM": "-", "LOGIN@": "14:20", "IDLE": "-", "WHAT": "w"}
-]
-```
-
-</details>
 
 </details>

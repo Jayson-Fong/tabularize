@@ -1,4 +1,4 @@
-from typing import TypeAlias, TYPE_CHECKING
+from typing import TypeAlias, TYPE_CHECKING, Iterable
 
 if TYPE_CHECKING:
     BytesType: TypeAlias = bytearray | bytes
@@ -6,7 +6,7 @@ if TYPE_CHECKING:
 
 
 def parse_headers(
-    data: "BytesType", force: tuple["BytesType", ...] | None = None
+    data: "BytesType", force: Iterable["BytesType"] | None = None
 ) -> tuple["Header", ...]:
     extracted_headers: list["Header"] = []
 
@@ -40,7 +40,9 @@ def parse_headers(
     return tuple(extracted_headers)
 
 
-def parse_body(headers: tuple["Header", ...], line: "BytesType") -> dict[bytes, "BytesType"]:
+def parse_body(
+    headers: tuple["Header", ...], line: "BytesType"
+) -> dict[bytes, "BytesType"]:
     entry: dict[bytes, "BytesType"] = {}
 
     start_offset: int | None = 0

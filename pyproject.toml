@@ -31,3 +31,6 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/Jayson-Fong/tabularize"
 Issues = "https://github.com/Jayson-Fong/tabularize/issues"
+
+[project.scripts]
+tabularize = "tabularize.main:main"
