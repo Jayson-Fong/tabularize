@@ -7,7 +7,9 @@
 [![Latest Version](https://img.shields.io/pypi/v/tabularize.svg)](https://pypi.org/project/tabularize/)
 [![Python Versions](https://img.shields.io/pypi/pyversions/tabularize.svg)](https://pypi.org/project/tabularize/)
 [![Format](https://img.shields.io/pypi/format/tabularize.svg)](https://pypi.org/project/tabularize/)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Jayson-Fong/tabularize/blob/main/README.md)
+[![License](https://img.shields.io/pypi/l/tabularize)](https://github.com/Jayson-Fong/tabularize/blob/main/README.md)
+[![Status](https://img.shields.io/pypi/status/tabularize)](https://pypi.org/project/tabularize/)
+[![Types](https://img.shields.io/pypi/types/tabularize)](https://pypi.org/project/tabularize/)
 
 </div>
 
