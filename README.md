@@ -82,7 +82,8 @@ chase                pts/2      3d  Oct 06 05:43 (:pts/0:S.1)
 <summary>📋 w</summary>
 
 The `w` command would typically include uptime information, which Tabularize does not know how to interpret. As a 
-result, this example excludes it.
+result, this example excludes it. While this is included as an example, it may be better implemented through other 
+means such as [TextFSM](https://pypi.org/project/textfsm/) or using regular expressions since it is consistent.
 
 ```terminaloutput
 USER TTY      FROM    LOGIN@  IDLE WHAT

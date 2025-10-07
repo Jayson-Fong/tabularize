@@ -5,35 +5,42 @@ if TYPE_CHECKING:
     Header: TypeAlias = tuple[bytes, int, int | None]
 
 
-def headers(
+def parse_headers(
     data: "BytesType", force: tuple["BytesType", ...] | None = None
 ) -> tuple["Header", ...]:
-    headers: list["Header"] = []
+    extracted_headers: list["Header"] = []
 
     header_start: int = 0
     header_found: bool = False
-    for i, char in enumerate(data):
+    data_length: int = len(data)
+
+    i: int = 0
+    while i < data_length:
         current_header: "BytesType" = data[header_start:i].strip()
         if force is not None and current_header in force:
             header_found = True
 
         if data[i] == 32:
             if len(data) > i + 1 and data[i + 1] == 32 and current_header:
+                # We know that the next character is a space, so skip it.
+                i += 1
                 header_found = True
         elif header_found:
-            headers.append((bytes(current_header), header_start, i))
+            extracted_headers.append((bytes(current_header), header_start, i))
             header_start = i
             header_found = False
+
+        i += 1
 
     # Capture our final header if there is one.
     ending_header: "BytesType" = data[header_start:].strip()
     if ending_header:
-        headers.append((bytes(ending_header), header_start, None))
+        extracted_headers.append((bytes(ending_header), header_start, None))
 
-    return tuple(headers)
+    return tuple(extracted_headers)
 
 
-def body(headers: tuple["Header", ...], line: "BytesType") -> dict[bytes, "BytesType"]:
+def parse_body(headers: tuple["Header", ...], line: "BytesType") -> dict[bytes, "BytesType"]:
     entry: dict[bytes, "BytesType"] = {}
 
     start_offset: int | None = 0
@@ -72,4 +79,4 @@ def body(headers: tuple["Header", ...], line: "BytesType") -> dict[bytes, "Bytes
     return entry
 
 
-__all__: tuple[str, ...] = ("headers", "body")
+__all__: tuple[str, ...] = ("parse_headers", "parse_body")
