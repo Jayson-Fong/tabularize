@@ -2,7 +2,6 @@
 Test cases for parsing.
 """
 
-
 from typing import Iterable
 
 import tabularize

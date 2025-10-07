@@ -2,7 +2,6 @@
 Tests for utility functions
 """
 
-
 import random
 
 # noinspection PyProtectedMember
@@ -30,7 +29,9 @@ def test_find_any() -> None:
 
             # Single Search with Manual End
             end_index = random.randint(0, len(data))
-            assert baseline_func(find_byte, 0, end_index) == test_func(data, (find_byte[0],), 0, end_index)
+            assert baseline_func(find_byte, 0, end_index) == test_func(
+                data, (find_byte[0],), 0, end_index
+            )
 
             # Double Search
             find_byte_1, find_byte_2 = random.randbytes(1), random.randbytes(1)
