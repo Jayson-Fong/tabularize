@@ -59,7 +59,7 @@ only analyzes the singular header line, not the content, to derive column names.
 ```
 
 By default, Tabularize will misinterpret the headers and assume that a `Idle Location` header exists rather than two
-separate `Idle` and `Location` headers. Since Tabularize works sequentially, you can specify an `Idle` header and it
+separate `Idle` and `Location` headers. Since Tabularize works sequentially, you can specify an `Idle` header, and it
 will resolve the error without having to specify a `Location` header:
 
 ```shell
@@ -77,6 +77,28 @@ using the `--encoding` and `errors` options:
 
 ```shell
 tabularize --encoding utf-8 --errors backslashreplace path-to-file
+```
+
+### API Usage
+
+Programs integrating Tabularize will need to independently determine the appropriate line to extract headers from 
+alongside body lines. The headers are then reused for body line parsing. For example:
+
+```python
+import tabularize
+
+
+data = b"""
+Name    Ice Cream Preference
+James   Mint Chocolate Chip
+""".splitlines()
+
+headers = tabularize.parse_headers(
+        data[0]
+    )
+
+for line in data[1:]:
+    print(tabularize.parse_body(headers, line))
 ```
 
 # Samples
