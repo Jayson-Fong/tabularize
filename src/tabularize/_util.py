@@ -14,10 +14,8 @@ def find_any(
     :return: Last occurrence index of targets in the specified range, or -1 if not found.
     """
 
-    if end is None:
-        end: int = len(content)
-
-    for i in range(start, end):
+    end_index: int = len(content) if end is None else end
+    for i in range(start, end_index):
         if content[i] in target:
             return i
 
@@ -40,10 +38,8 @@ def rfind_any(
     :return: Last occurrence index of targets in the specified range, or -1 if not found.
     """
 
-    if end is None:
-        end: int = len(content)
-
-    for i in range(end - 1, start - 1, -1):
+    end_index: int = (len(content) if end is None else end) - 1
+    for i in range(end_index, start - 1, -1):
         if content[i] in target:
             return i
 
