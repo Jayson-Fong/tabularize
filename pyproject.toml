@@ -32,5 +32,49 @@ classifiers = [
 Homepage = "https://github.com/Jayson-Fong/tabularize"
 Issues = "https://github.com/Jayson-Fong/tabularize/issues"
 
+[dependency-groups]
+test = [
+    "pytest",
+    "pytest-cov",
+]
+
+dev = [
+    "black",
+    "ruff",
+    "mypy",
+    "pytest",
+    "pytest-cov"
+]
+
+[tool.hatch.build]
+packages = ["src/tabularize"]
+exclude = ["tests"]
+
+[tool.pytest.ini_options]
+addopts = "-v --cov=tabularize --cov-report=term-missing"
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_configs = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+strict_optional = true
+mypy_path = ["src", "tests"]
+
+[tool.ruff]
+src = ["src"]
+fix = true
+show-fixes = true
+output-format = "full"
+
+[tool.coverage.run]
+branch = true
+source = ["tabularize", "tests"]
+
+[tool.coverage.paths]
+source = ["src", "*/site-packages"]
+
 [project.scripts]
 tabularize = "tabularize.main:main"

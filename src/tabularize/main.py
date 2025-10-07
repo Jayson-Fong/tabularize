@@ -5,7 +5,7 @@ Provides a command-line interface to the package
 import argparse
 import json
 import sys
-from typing import BinaryIO, Iterable
+from typing import BinaryIO, Iterable, Sequence
 
 from . import parse
 
@@ -81,7 +81,9 @@ def _process_file(
             )
 
 
-def main() -> None:
+def main(
+    args: Sequence[str] | None = None, namespace: argparse.Namespace | None = None
+) -> None:
     """
     Parses inputs from the command-line and prints output to standard output.
 
@@ -110,8 +112,9 @@ def main() -> None:
         "files", nargs="+", help="File path to process or '-' for standard input"
     )
 
-    args: argparse.Namespace = parser.parse_args()
+    args: argparse.Namespace = parser.parse_args(args, namespace)
 
+    errored: bool = False
     headers: tuple[bytes, ...] = tuple(header.encode() for header in args.header)
     for file_path in args.files:
         # noinspection PyBroadException
@@ -124,11 +127,11 @@ def main() -> None:
                 errors=args.errors,
             )
         except Exception as e:
+            errored = True
             print(f"Failed to process file: {file_path} ({e})", file=sys.stderr)
 
-
-if __name__ == "__main__":
-    main()
+    if errored:
+        sys.exit(1)
 
 
 __all__: tuple[str, ...] = ("main",)

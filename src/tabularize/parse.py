@@ -3,6 +3,7 @@ Parsing utilities for semi-structured tabular text input
 """
 
 from typing import TypeAlias, TYPE_CHECKING, Iterable
+from . import _util
 
 if TYPE_CHECKING:
     BytesType: TypeAlias = bytearray | bytes
@@ -37,6 +38,8 @@ def parse_headers(
                 # We know that the next character is a space, so skip it.
                 i += 1
                 header_found = True
+        elif data[i] == 9:
+            header_found = True
         elif header_found:
             extracted_headers.append((bytes(current_header), header_start, i))
             header_start = i
@@ -78,18 +81,21 @@ def parse_body(
         # The end of our header being our space character indicates our simplest case
         # where we may potentially have fixed-width columns.
         header_start_offset: int = max(start_offset, start_index)
+        if header_start_offset >= len(line):
+            break
+
         if end_index is not None and (
             end_index <= start_offset or line[end_index - 1] != 32
         ):
             # Rather than strictly go off of our header indices, assume that continuous
             # data represents a singular column as it appears we might be overflowing.
-            end_index: int = line.find(b"\x20", header_start_offset)
+            end_index: int = _util.find_any(line, (32, 9), header_start_offset)
             end_index: int | None = None if end_index == -1 else end_index
 
         # Given we have established that our current offset is assigned to our current
         # header, we'll also assume that the whole chunk is associated as well.
         if line[header_start_offset] != 32:
-            start_index: int = line.rfind(b"\x20", 0, header_start_offset)
+            start_index: int = _util.rfind_any(line, (32, 9), 0, header_start_offset)
             header_start_offset = None if start_index == -1 else start_index
 
         value: "BytesType" = line[header_start_offset:end_index].strip()
