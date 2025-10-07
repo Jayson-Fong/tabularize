@@ -26,3 +26,51 @@ input data not following these constraints.
 
 This package's design takes influence from the [Name/Finger protocol](https://datatracker.ietf.org/doc/html/rfc742) due
 to its non-standardized, human-readable status reports that tend to give machines a harder time.
+
+# Samples
+
+<details style="border: 1px solid; border-radius: 8px; padding: 8px; margin-top: 4px;">
+<summary>Name/Finger Protocol</summary>
+
+Tabularize is particularly useful for parsing the Name/Finger Protocol given that the `fingerd` server implementation is 
+unknown due to its lack of standardization. However, if the server implementation is known, consider using a 
+regular expression-based solution instead such as [TextFSM](https://pypi.org/project/textfsm/) as the data types can
+help indicate the start and end of output.
+
+<details style="border: 1px solid; border-radius: 8px; padding: 8px; margin-top: 4px;">
+<summary>Debian fingerd</summary>
+
+```terminaloutput
+Login     Name       Tty      Idle  Login Time   Office     Office Phone
+alfred              *pts/0      1d  Oct 06 19:56 (192.168.1.1)
+bert                 pts/1      2d  Oct 06 12:34 (:pts/0:S.0)
+chase                pts/2      3d  Oct 06 05:43 (:pts/0:S.1)
+```
+
+```json
+[
+  {"Login": "alfred", "Tty": "pts/0", "Idle": "1d", "Login Time": "Oct 06 19:56", "Office": "(192.168.1.1)"},
+  {"Login": "bert", "Tty": "pts/1", "Idle": "2d", "Login Time": "Oct 06 12:34", "Office": "(:pts/0:S.0)"},
+  {"Login": "chase", "Tty": "pts/2", "Idle": "3d", "Login Time": "Oct 06 05:43", "Office": "(:pts/0:S.1)"}
+]
+```
+
+</details>
+
+<details style="border: 1px solid; border-radius: 8px; padding: 8px; margin-top: 4px;">
+<summary>Cisco fingerd</summary>
+
+```terminaloutput
+    Line       User       Host(s)              Idle       Location
+   1 vty 0                idle                 00:00:00 
+```
+
+```json
+[
+  {"Line": "1 vty 0", "Host(s)": "idle", "Idle": "00:00:00"}
+]
+```
+
+</details>
+
+</details>
