@@ -1,3 +1,7 @@
+"""
+Provides a command-line interface to the package
+"""
+
 import argparse
 import json
 import sys
@@ -12,6 +16,16 @@ def _parse_file(
     encoding: str = "utf-8",
     errors: str = "backslashreplace",
 ) -> None:
+    """
+    Parses `file` and prints output to standard output.
+
+    :param file: File to parse.
+    :param force_headers: Iterable of header names to use as a heuristic.
+    :param encoding: Encoding to use for decoding.
+    :param errors: Error resolution strategy for decoding.
+    :return: None.
+    """
+
     header_line: bytes = file.readline()
     while not header_line.strip():
         header_line = file.readline()
@@ -40,6 +54,16 @@ def _process_file(
     encoding: str = "utf-8",
     errors: str = "backslashreplace",
 ) -> None:
+    """
+    Opens the appropriate stream and performs parsing.
+
+    :param file_path: Path to file to parse.
+    :param force_headers: Iterable of header names to use as a heuristic.
+    :param encoding: Encoding to use for decoding.
+    :param errors: Error resolution strategy for decoding.
+    :return: None.
+    """
+
     if file_path == "-":
         if sys.stdin.isatty():
             raise RuntimeError("Terminal is attached - cannot process standard input")
@@ -58,6 +82,12 @@ def _process_file(
 
 
 def main() -> None:
+    """
+    Parses inputs from the command-line and prints output to standard output.
+
+    :return: None.
+    """
+
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--header",
@@ -84,6 +114,8 @@ def main() -> None:
 
     headers: tuple[bytes, ...] = tuple(header.encode() for header in args.header)
     for file_path in args.files:
+        # noinspection PyBroadException
+        # pylint: disable=broad-exception-caught
         try:
             _process_file(
                 file_path,

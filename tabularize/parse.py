@@ -1,3 +1,7 @@
+"""
+Parsing utilities for semi-structured tabular text input
+"""
+
 from typing import TypeAlias, TYPE_CHECKING, Iterable
 
 if TYPE_CHECKING:
@@ -8,6 +12,14 @@ if TYPE_CHECKING:
 def parse_headers(
     data: "BytesType", force: Iterable["BytesType"] | None = None
 ) -> tuple["Header", ...]:
+    """
+    Parses a line of data to derive header names and positions.
+
+    :param data: Data to parse.
+    :param force: Iterable of header names to use as a heuristic.
+    :return: Tuple of headers, consisting of a name, start index, and end index.
+    """
+
     extracted_headers: list["Header"] = []
 
     header_start: int = 0
@@ -43,6 +55,14 @@ def parse_headers(
 def parse_body(
     headers: tuple["Header", ...], line: "BytesType"
 ) -> dict[bytes, "BytesType"]:
+    """
+    Parses a body line based on provided headers.
+
+    :param headers: Headers to map data to.
+    :param line: Data to parse.
+    :return: Dictionary of parsed data.
+    """
+
     entry: dict[bytes, "BytesType"] = {}
 
     start_offset: int | None = 0

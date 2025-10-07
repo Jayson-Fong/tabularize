@@ -1,3 +1,7 @@
+"""
+Enables the execution of the CLI by package name
+"""
+
 if __name__ == "__main__":
     from . import main
 

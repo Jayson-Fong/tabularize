@@ -73,7 +73,7 @@ cat file-to-parse | tabularize -
 
 Tabularize operates at the byte level; however, it prints out data as JSON, which does not support bytes. As a result,
 it decodes the data before printing it to the terminal. You can customize the encoding and error resolution strategy
-using the `--encoding` and `errors` options:
+using the `--encoding` and `--errors` options:
 
 ```shell
 tabularize --encoding utf-8 --errors backslashreplace path-to-file
