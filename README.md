@@ -15,7 +15,7 @@
 
 # Purpose
 
-Tabularize aids in the parsing of semi-structured data in a table-like format into Python dictionaries given no
+Tabularize aids in the parsing of semi-structured data in a table-like format into Python dictionaries given minimal
 knowledge of the expected data format.
 
 While packages such as [csv](https://docs.python.org/3/library/csv.html), [pandas](https://pypi.org/project/pandas/),
