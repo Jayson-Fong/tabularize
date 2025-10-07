@@ -27,6 +27,58 @@ input data not following these constraints.
 This package's design takes influence from the [Name/Finger protocol](https://datatracker.ietf.org/doc/html/rfc742) due
 to its non-standardized, human-readable status reports that tend to give machines a harder time.
 
+Tabularize is _probably not the solution for you_ - that is, modern protocols are often machine-readable, or they offer 
+a means to make it easily machine-readable. It shines when you need to parse semi-structured, tabular data where the
+schema is unknown (a situation you should avoid) or when you need tabular data parsed quickly.
+
+# Usage
+
+Tabularize is offered as both an API for developers and a command-line tool. To install it:
+
+```shell
+python3 -m pip install tabularize
+```
+
+### Command-Line Usage
+
+The `tabularize` command is available upon installation. The command takes as a parameter a list of files, where it will 
+locate the first non-blank line of each one to determine headers then print out a JSON object for each later, parsed 
+entry. For example:
+
+```shell
+tabularize path-to-file path-to-another-file
+```
+
+Sometimes, automatic header detection may not function as expected when there is a degree of ambiguity since Tabularize
+only analyzes the singular header line, not the content, to derive column names. For example, given the following data:
+
+```terminaloutput
+    Line      User       Host(s)              Idle Location
+   1 vty 0               idle                 00:00:05 192.168.1.1
+*  2 vty 1               idle                 00:00:00 192.168.1.2
+```
+
+By default, Tabularize will misinterpret the headers and assume that a `Idle Location` header exists rather than two
+separate `Idle` and `Location` headers. Since Tabularize works sequentially, you can specify an `Idle` header and it
+will resolve the error without having to specify a `Location` header:
+
+```shell
+tabularize -H Idle path-to-finger-output
+```
+
+The `tabularize` command also supports piping. When piping is desired, use the file name `-`:
+```shell
+cat file-to-parse | tabularize -
+```
+
+Tabularize operates at the byte level; however, it prints out data as JSON, which does not support bytes. As a result,
+it decodes the data before printing it to the terminal. You can customize the encoding and error resolution strategy
+using the `--encoding` and `errors` options:
+
+```shell
+tabularize --encoding utf-8 --errors backslashreplace path-to-file
+```
+
 # Samples
 
 Tabularize is particularly useful for parsing the Name/Finger Protocol given that the `fingerd` server implementation is 
