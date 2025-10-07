@@ -8,7 +8,7 @@ import json
 import random
 import string
 import uuid
-from typing import Sequence, TYPE_CHECKING
+from typing import Sequence, TYPE_CHECKING, Optional
 from unittest import mock
 
 import pytest
@@ -43,8 +43,8 @@ def _generate_random_sequence(min_length: int = 1, max_length: int = 64) -> str:
 def _patch_stdin(
     monkeypatch: "MonkeyPatch",
     stdin: bytes,
-    args: Sequence[str] | None = None,
-    namespace: argparse.Namespace | None = None,
+    args: Optional[Sequence[str]] = None,
+    namespace: Optional[argparse.Namespace] = None,
 ) -> tuple[str, str]:
     """
     Executes the program with standard input

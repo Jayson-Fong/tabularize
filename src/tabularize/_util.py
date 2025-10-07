@@ -1,8 +1,11 @@
+from typing import Union, Optional
+
+
 def find_any(
-    content: str | bytes,
-    target: tuple[str | int, ...],
+    content: Union[str, bytes],
+    target: tuple[Union[str, int], ...],
     start: int = 0,
-    end: int | None = None,
+    end: Optional[int] = None,
 ) -> int:
     """
     Looks for the first instance of a targeted character.
@@ -23,10 +26,10 @@ def find_any(
 
 
 def rfind_any(
-    content: str | bytes,
-    target: tuple[str | int, ...],
+    content: Union[str, bytes],
+    target: tuple[Union[str, int], ...],
     start: int = 0,
-    end: int | None = None,
+    end: Optional[int] = None,
 ) -> int:
     """
     Starting from the end, looks for the first instance of a targeted character.

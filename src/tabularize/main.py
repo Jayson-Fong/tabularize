@@ -5,7 +5,7 @@ Provides a command-line interface to the package
 import argparse
 import json
 import sys
-from typing import BinaryIO, Iterable, Sequence
+from typing import BinaryIO, Iterable, Sequence, Optional
 
 from . import parse
 
@@ -34,7 +34,7 @@ def _parse_file(
         if not header_line:
             return
 
-    headers: tuple[tuple[bytes, int, int | None], ...] = parse.parse_headers(
+    headers: tuple[tuple[bytes, int, Optional[int]], ...] = parse.parse_headers(
         header_line, force=force_headers
     )
     for line in file:
@@ -82,7 +82,7 @@ def _process_file(
 
 
 def main(
-    args: Sequence[str] | None = None, namespace: argparse.Namespace | None = None
+    args: Optional[Sequence[str]] = None, namespace: Optional[argparse.Namespace] = None
 ) -> None:
     """
     Parses inputs from the command-line and prints output to standard output.

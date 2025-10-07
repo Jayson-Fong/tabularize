@@ -2,16 +2,16 @@
 Parsing utilities for semi-structured tabular text input
 """
 
-from typing import TypeAlias, TYPE_CHECKING, Iterable
+from typing import TypeAlias, TYPE_CHECKING, Iterable, Union, Optional
 from . import _util
 
 if TYPE_CHECKING:
-    BytesType: TypeAlias = bytearray | bytes
-    Header: TypeAlias = tuple[bytes, int, int | None]
+    BytesType: TypeAlias = Union[bytearray, bytes]
+    Header: TypeAlias = tuple[bytes, int, Optional[int]]
 
 
 def parse_headers(
-    data: "BytesType", force: Iterable["BytesType"] | None = None
+    data: "BytesType", force: Optional[Iterable["BytesType"]] = None
 ) -> tuple["Header", ...]:
     """
     Parses a line of data to derive header names and positions.
@@ -68,7 +68,7 @@ def parse_body(
 
     entry: dict[bytes, "BytesType"] = {}
 
-    start_offset: int | None = 0
+    start_offset: Optional[int] = 0
     for header_name, start_index, end_index in headers:
         if start_offset is None or start_index > len(line):
             break

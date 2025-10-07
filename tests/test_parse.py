@@ -2,21 +2,21 @@
 Test cases for parsing.
 """
 
-from typing import Iterable
+from typing import Iterable, Union, Optional
 
 import tabularize
 
 
 def _parse(
-    header_line: bytearray | bytes,
-    body_lines: Iterable[bytearray | bytes],
-    force: Iterable[bytearray | bytes] | None = None,
-) -> list[dict[bytes, bytearray | bytes]]:
-    headers: tuple[tuple[bytes, int, int | None], ...] = tabularize.parse_headers(
+    header_line: Union[bytearray, bytes],
+    body_lines: Iterable[Union[bytearray, bytes]],
+    force: Optional[Iterable[Union[bytearray, bytes]]] = None,
+) -> list[dict[bytes, Union[bytearray, bytes]]]:
+    headers: tuple[tuple[bytes, int, Optional[int]], ...] = tabularize.parse_headers(
         header_line, force=force
     )
 
-    body: list[dict[bytes, bytearray | bytes]] = []
+    body: list[dict[bytes, Union[bytearray, bytes]]] = []
     for body_line in body_lines:
         body.append(tabularize.parse_body(headers, body_line))
 
