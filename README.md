@@ -88,8 +88,7 @@ alongside body lines. The headers are then reused for body line parsing. For exa
 import tabularize
 
 
-data = b"""
-Name    Ice Cream Preference
+data = b"""Name    Ice Cream Preference
 James   Mint Chocolate Chip
 """.splitlines()
 
