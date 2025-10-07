@@ -2,10 +2,15 @@
 Parsing utilities for semi-structured tabular text input
 """
 
-from typing import TypeAlias, TYPE_CHECKING, Iterable, Union, Optional
+from typing import TYPE_CHECKING, Iterable, Union, Optional
 from . import _util
 
 if TYPE_CHECKING:
+    try:
+        from typing import TypeAlias
+    except ImportError:
+        from typing_extensions import TypeAlias
+
     BytesType: TypeAlias = Union[bytearray, bytes]
     Header: TypeAlias = tuple[bytes, int, Optional[int]]
 
