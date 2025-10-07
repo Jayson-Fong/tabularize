@@ -1,4 +1,6 @@
 name: Test Python Package
+permissions:
+  contents: read
 
 on:
   push:
