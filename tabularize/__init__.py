@@ -38,8 +38,12 @@ def body(headers: tuple["Header", ...], line: "BytesType") -> dict[bytes, "Bytes
 
     start_offset: int | None = 0
     for header_name, start_index, end_index in headers:
-        if start_offset is None:
+        if start_offset is None or start_index > len(line):
             break
+
+        # If our data is shorter than our headers
+        if end_index is not None:
+            end_index: int = min(end_index, len(line))
 
         # If `end_index` is None, it indicates that we should capture everything remaining.
         # The end of our header being our space character indicates our simplest case
