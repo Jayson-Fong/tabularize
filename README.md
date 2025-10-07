@@ -49,7 +49,7 @@ chase                pts/2      3d  Oct 06 05:43 (:pts/0:S.1)
 
 ```json
 [
-  {"Login": "alfred", "Tty": "pts/0", "Idle": "1d", "Login Time": "Oct 06 19:56", "Office": "(192.168.1.1)"},
+  {"Login": "alfred", "Tty": "*pts/0", "Idle": "1d", "Login Time": "Oct 06 19:56", "Office": "(192.168.1.1)"},
   {"Login": "bert", "Tty": "pts/1", "Idle": "2d", "Login Time": "Oct 06 12:34", "Office": "(:pts/0:S.0)"},
   {"Login": "chase", "Tty": "pts/2", "Idle": "3d", "Login Time": "Oct 06 05:43", "Office": "(:pts/0:S.1)"}
 ]
@@ -68,6 +68,32 @@ chase                pts/2      3d  Oct 06 05:43 (:pts/0:S.1)
 ```json
 [
   {"Line": "1 vty 0", "Host(s)": "idle", "Idle": "00:00:00"}
+]
+```
+
+</details>
+
+</details>
+
+<details style="border: 1px solid; border-radius: 8px; padding: 8px; margin-top: 4px;">
+<summary>🖥️ Terminal Commands</summary>
+
+<details style="border: 1px solid; border-radius: 8px; padding: 8px; margin-top: 4px;">
+<summary>📋 w</summary>
+
+The `w` command would typically include uptime information, which Tabularize does not know how to interpret. As a 
+result, this example excludes it.
+
+```terminaloutput
+USER TTY      FROM    LOGIN@  IDLE WHAT
+dave console  -      Sun20   23:26 -
+eric s005     -      14:20       - w
+```
+
+```json
+[
+  {"USER": "dave", "TTY": "console", "FROM": "-", "LOGIN@": "Sun20", "IDLE": "23:26", "WHAT": "-"},
+  {"USER": "eric", "TTY": "s005", "FROM": "-", "LOGIN@": "14:20", "IDLE": "-", "WHAT": "w"}
 ]
 ```
 

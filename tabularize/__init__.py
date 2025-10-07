@@ -57,6 +57,12 @@ def body(headers: tuple["Header", ...], line: "BytesType") -> dict[bytes, "Bytes
             end_index: int = line.find(b"\x20", header_start_offset)
             end_index: int | None = None if end_index == -1 else end_index
 
+        # Given we have established that our current offset is assigned to our current
+        # header, we'll also assume that the whole chunk is associated as well.
+        if line[header_start_offset] != 32:
+            start_index: int = line.rfind(b"\x20", 0, header_start_offset)
+            header_start_offset = None if start_index == -1 else start_index
+
         value: "BytesType" = line[header_start_offset:end_index].strip()
         if value:
             entry[header_name] = value
