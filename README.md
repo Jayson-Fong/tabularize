@@ -30,7 +30,7 @@ to its non-standardized, human-readable status reports that tend to give machine
 # Samples
 
 <details style="border: 1px solid; border-radius: 8px; padding: 8px; margin-top: 4px;">
-<summary>Name/Finger Protocol</summary>
+<summary>🪄 Name/Finger Protocol</summary>
 
 Tabularize is particularly useful for parsing the Name/Finger Protocol given that the `fingerd` server implementation is 
 unknown due to its lack of standardization. However, if the server implementation is known, consider using a 
@@ -38,7 +38,7 @@ regular expression-based solution instead such as [TextFSM](https://pypi.org/pro
 help indicate the start and end of output.
 
 <details style="border: 1px solid; border-radius: 8px; padding: 8px; margin-top: 4px;">
-<summary>Debian fingerd</summary>
+<summary>🐧 Debian fingerd</summary>
 
 ```terminaloutput
 Login     Name       Tty      Idle  Login Time   Office     Office Phone
@@ -58,7 +58,7 @@ chase                pts/2      3d  Oct 06 05:43 (:pts/0:S.1)
 </details>
 
 <details style="border: 1px solid; border-radius: 8px; padding: 8px; margin-top: 4px;">
-<summary>Cisco fingerd</summary>
+<summary>📡 Cisco fingerd</summary>
 
 ```terminaloutput
     Line       User       Host(s)              Idle       Location
