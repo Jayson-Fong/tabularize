@@ -30,7 +30,7 @@ to its non-standardized, human-readable status reports that tend to give machine
 # Samples
 
 <details style="border: 1px solid; border-radius: 8px; padding: 8px; margin-top: 4px;">
-<summary>🪄 Name/Finger Protocol</summary>
+<summary>📇 Name/Finger Protocol</summary>
 
 Tabularize is particularly useful for parsing the Name/Finger Protocol given that the `fingerd` server implementation is 
 unknown due to its lack of standardization. However, if the server implementation is known, consider using a 
